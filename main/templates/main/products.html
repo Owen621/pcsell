@@ -1,0 +1,164 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<head>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1{
+            font-size: 36px;
+            font-weight: 600;
+        }
+
+        p{
+            color:#777;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 22px;
+            padding: 10px;
+        }
+
+        h3{
+            text-align: center;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .products{
+            width: 80%;
+            margin: auto;
+            text-align: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+        .products-col{
+            flex-basis: 31%;
+            border-radius: 10px;
+            margin-bottom: 5%;
+            text-align: center;
+        }
+        .products-col img{
+            width: 100%;
+            border-radius: 10px;
+        }
+        .products-col p{
+            padding: 0;
+        }
+        .products-col h3{
+            margin-top: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .row{
+            margin-top: 5%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+
+        /* Dropdown Button */
+        .dropbtn {
+            background-color: #000000;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {display: block;}
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {background-color: #5fbed6;}
+
+        .product-link {
+            display: inline-block;
+            padding: 10px;
+            transition: border-color 0.3s;
+            text-decoration: none; /* Remove underline */
+            border: 2px solid transparent; /* Add transparent border */
+            box-sizing: border-box; /* Include border in element dimensions */
+        }
+
+        .product-link:hover {
+            border-color: #363636; /* Deepslate grey */
+        }
+
+        .product-link h3 {
+            color: black; /* Change text color */
+        }
+
+        
+
+    </style>
+</head>
+
+
+<section class="products">
+    <h1>Products</h1>
+    
+    <p>Trust best pcs going</p>
+    <div class="dropdown">
+        <button class="dropbtn">Filter</button>
+        <div class="dropdown-content">
+          <a href="/pcs?priceasc">Price low to high</a>
+          <a href="/pcs?pricedesc">Price high to low</a>
+          <a href="/pcs?datenewest">Date added newest</a>
+          <a href="/pcs?dateoldest">Date added oldest</a>
+        </div>
+      </div>
+
+    {% if not nothing %}
+        {% for list in newproducts %}
+            <div class="row">
+                {% for item in list %}
+                    <a href="{% url 'productPage' slug=item.slug %}" class="product-link">
+                        <div class="products-col">
+                            <img src="{{item.image.url}}">           
+                            <h3>{{item.product_name}}</h3>
+                            <h3>£{{item.getprice}}</h3>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+    {% endif %}
+</section>
+
+
+{% endblock %}

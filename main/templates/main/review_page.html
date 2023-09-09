@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h1>Leave a review</h1>
+    {% if submitted %}
+        <h2>REVIEW SUBMITTED SUCCESSFULLY</h2>
+    {% endif %}
+    <form method="POST" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}

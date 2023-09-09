@@ -1,0 +1,158 @@
+<!doctype html>
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+    <head>
+        <style>
+
+            .reviews {
+                margin-left: 10%;
+                margin-right: 10%;
+                margin-top: 100px;
+                word-break: break-word;
+            }
+
+            .product-details {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0px;
+                margin-top: 50px;
+            }
+
+            .review-image img {
+                max-width: 100px;
+                max-height: 100px;
+            }
+        
+            .image {
+                flex: 0 0 50%;
+                max-width: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .image img {
+                max-width: 100%;
+                max-height: 400px;
+                width: auto;
+                height: auto;
+            }
+        
+            .specifications {
+                flex: 0 0 50%;
+                max-width: 50%;
+                max-height: 400px;
+                overflow-y: auto;
+                margin-top: 20px;
+            }
+        
+            table {
+                border-collapse: collapse;
+                border: 2px solid #333;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                width: 400px;
+                table-layout: relative;
+            }
+        
+            th,
+            td {
+                border: 2px solid #333;
+                padding: 8px;
+                text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        
+            th:first-child,
+            td:first-child {
+                width: 100px;
+            }
+        
+            @media (max-width: 768px) {
+                .product-details {
+                    flex-direction: column;
+                    align-items: center;
+                }
+        
+                .image,
+                .specifications {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                    margin-right: 0;
+                }
+        
+                .image {
+                    padding-bottom: 10px;
+                }
+            }
+        
+            @media (min-width: 769px) {
+                .product-details {
+                    flex-wrap: nowrap;
+                }
+            }
+        </style>
+        
+        
+        
+        
+        
+    </head>
+
+    <div class="product-details">
+        <div class="image">
+            <img src="{{ product.image.url }}">
+        </div>
+        <div class="specifications">
+            <table>
+                {% for part in product.parts.all %}
+                <tr>
+                    <td>{{ part.type }}</td>
+                    <td>{{ part.part_name }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="container home_msg">
+        <form enctype="multipart/form-data" method="post" role="product_page">
+            {% csrf_token %}
+            <h2>To pay, click on this button <button type="submit" class="btn btn-success" href="{% url 'productPage' slug=product.slug %}" data-bind-href="pricing">£{{product.getprice}}</button></h2>
+        </form>
+    </div>
+
+
+
+{% endblock %}
+
+
+    <!--
+    <div class="reviews">
+        <h3>Reviews</h3>
+        {% if none %}
+            <h6>No reviews yet be the the first to make one</h6>
+        {% else %}
+            {% for review in reviews %}
+                <h4>{{review.reviewer.first_name}} {{review.reviewer.last_name}}</h4>
+                <h4>{{review.rating}}/5.0</h4>
+                <p>{{review.review}}</p>
+                <div class="review-image">
+                    {% if review.image1 %}
+                        <img src="{{ review.image1.url }}">
+                    {% endif %}
+                    {% if review.image2 %}
+                        <img src="{{ review.image2.url }}">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <a href="{% url 'reviewPage' slug=product.slug %}"><h6>Add review here</h6></a>
+    </div>  
+    -->
